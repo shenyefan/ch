@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xi'an City Wall — How It Was Built</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: #f5f0e8;
+      color: #2a1f0e;
+      padding: 24px 16px;
+    }
+
+    .widget { max-width: 780px; margin: 0 auto; }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 6px;
+      color: #2a1f0e;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #7a6a52;
+      margin-bottom: 24px;
+      font-family: system-ui, sans-serif;
+    }
+
+    .stage-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .stage-btn {
+      border: 1px solid #c8b89a;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all .2s;
+      background: #ede8de;
+      color: #7a6a52;
+      font-family: system-ui, sans-serif;
+    }
+
+    .stage-btn.active {
+      background: #5a3a1a;
+      color: #fff;
+      border-color: #5a3a1a;
+    }
+
+    .stage-btn:hover:not(.active) { background: #e0d8ca; }
+
+    .diagram-wrap {
+      background: #ede8de;
+      border-radius: 12px;
+      border: 1px solid #c8b89a;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    svg { width: 100%; display: block; }
+
+    .detail-card {
+      border-radius: 12px;
+      padding: 16px 20px;
+      background: #ede8de;
+      border: 1px solid #c8b89a;
+    }
+
+    .stage-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2a1f0e;
+      margin-bottom: 12px;
+      font-family: Georgia, serif;
+    }
+
+    .stage-title .zh {
+      font-size: 12px;
+      color: #8B5A2B;
+      font-weight: 400;
+      margin-left: 6px;
+      font-family: system-ui, sans-serif;
+    }
+
+    .layer-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #c8b89a;
+    }
+
+    .layer-row:last-child { border-bottom: none; }
+
+    .layer-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .layer-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2a1f0e;
+      min-width: 180px;
+      flex-shrink: 0;
+      font-family: system-ui, sans-serif;
+    }
+
+    .layer-name .zh {
+      font-size: 12px;
+      color: #8B5A2B;
+      font-weight: 400;
+      margin-left: 4px;
+    }
+
+    .layer-desc {
+      font-size: 13px;
+      color: #5a4a32;
+      line-height: 1.5;
+      font-family: system-ui, sans-serif;
+    }
+
+    @media (max-width: 500px) {
+      .layer-row { flex-direction: column; gap: 4px; }
+      .layer-name { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+<div class="widget">
+  <h1>Xi'an City Wall — 西安城墙</h1>
+  <p class="subtitle">Click each tier to explore the gate tower construction</p>
+
+  <div class="stage-btns">
+    <button class="stage-btn active" onclick="show(0)">① Foundation Platform</button>
+    <button class="stage-btn" onclick="show(1)">② Rammed Earth Wall</button>
+    <button class="stage-btn" onclick="show(2)">③ Lower Eave 下檐</button>
+    <button class="stage-btn" onclick="show(3)">④ Middle Tier 中檐</button>
+    <button class="stage-btn" onclick="show(4)">⑤ Upper Roof 上檐</button>
+    <button class="stage-btn" onclick="show(5)">⑥ Full Structure</button>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 680 420" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- UPPER ROOF 上檐 -->
+      <g id="g-upper" opacity="0" style="transition:opacity .45s">
+        <polygon points="200,42 340,10 480,42" fill="#BA7517" stroke="#854F0B" stroke-width="0.8"/>
+        <rect x="316" y="8" width="48" height="8" rx="2" fill="#5a3a1a"/>
+        <rect x="192" y="42" width="296" height="10" rx="2" fill="#854F0B"/>
+        <rect x="210" y="52" width="260" height="12" rx="2" fill="#6B3A0B" opacity="0.9"/>
+        <rect x="215" y="50" width="22" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="258" y="50" width="22" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="301" y="50" width="22" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="344" y="50" width="22" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="387" y="50" width="22" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="430" y="50" width="22" height="14" rx="2" fill="#8B5A2B"/>
+        <text font-size="11" fill="#854F0B" x="116" y="30" font-family="system-ui,sans-serif" font-weight="700">上檐 Upper roof</text>
+        <line x1="194" y1="30" x2="212" y2="30" stroke="#854F0B" stroke-width="0.8" stroke-dasharray="3 2"/>
+      </g>
+
+      <!-- MIDDLE TIER 中檐 -->
+      <g id="g-middle" opacity="0" style="transition:opacity .45s">
+        <polygon points="185,100 340,72 495,100" fill="#EF9F27" stroke="#BA7517" stroke-width="0.8"/>
+        <rect x="178" y="100" width="324" height="10" rx="2" fill="#BA7517"/>
+        <rect x="195" y="110" width="290" height="12" rx="2" fill="#6B3A0B" opacity="0.85"/>
+        <rect x="200" y="108" width="20" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="244" y="108" width="20" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="288" y="108" width="20" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="332" y="108" width="20" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="376" y="108" width="20" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="420" y="108" width="20" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="458" y="108" width="20" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="210" y="122" width="260" height="52" rx="0" fill="#d4a96a" opacity="0.5"/>
+        <rect x="220" y="130" width="36" height="36" rx="2" fill="#8B4513" opacity="0.7"/>
+        <rect x="270" y="130" width="36" height="36" rx="2" fill="#8B4513" opacity="0.7"/>
+        <rect x="320" y="130" width="36" height="36" rx="2" fill="#8B4513" opacity="0.7"/>
+        <rect x="370" y="130" width="36" height="36" rx="2" fill="#8B4513" opacity="0.7"/>
+        <rect x="420" y="130" width="36" height="36" rx="2" fill="#8B4513" opacity="0.7"/>
+        <rect x="210" y="122" width="12" height="52" rx="1" fill="#C04828"/>
+        <rect x="458" y="122" width="12" height="52" rx="1" fill="#C04828"/>
+        <rect x="210" y="172" width="260" height="6" rx="1" fill="#8B5A2B"/>
+        <text font-size="11" fill="#BA7517" x="116" y="88" font-family="system-ui,sans-serif" font-weight="700">中檐 Middle tier</text>
+        <line x1="175" y1="88" x2="193" y2="88" stroke="#BA7517" stroke-width="0.8" stroke-dasharray="3 2"/>
+      </g>
+
+      <!-- LOWER EAVE 下檐 -->
+      <g id="g-lower" opacity="0" style="transition:opacity .45s">
+        <polygon points="170,198 340,172 510,198" fill="#EF9F27" stroke="#BA7517" stroke-width="0.8"/>
+        <rect x="162" y="198" width="356" height="10" rx="2" fill="#BA7517"/>
+        <rect x="180" y="208" width="320" height="12" rx="2" fill="#6B3A0B" opacity="0.85"/>
+        <rect x="185" y="206" width="18" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="224" y="206" width="18" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="263" y="206" width="18" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="302" y="206" width="18" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="341" y="206" width="18" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="380" y="206" width="18" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="419" y="206" width="18" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="458" y="206" width="18" height="14" rx="2" fill="#8B5A2B"/>
+        <rect x="196" y="220" width="288" height="62" rx="0" fill="#c9935a" opacity="0.45"/>
+        <rect x="206" y="228" width="50" height="46" rx="2" fill="#8B4513" opacity="0.7"/>
+        <rect x="272" y="228" width="50" height="46" rx="2" fill="#8B4513" opacity="0.7"/>
+        <rect x="322" y="228" width="36" height="46" rx="2" fill="#6B3A0B" opacity="0.8"/>
+        <rect x="374" y="228" width="50" height="46" rx="2" fill="#8B4513" opacity="0.7"/>
+        <rect x="430" y="228" width="50" height="46" rx="2" fill="#8B4513" opacity="0.7"/>
+        <rect x="196" y="220" width="14" height="62" rx="1" fill="#C04828"/>
+        <rect x="470" y="220" width="14" height="62" rx="1" fill="#C04828"/>
+        <rect x="319" y="220" width="14" height="62" rx="1" fill="#C04828" opacity="0.7"/>
+        <text font-size="11" fill="#6B3A0B" x="112" y="190" font-family="system-ui,sans-serif" font-weight="700">下檐 Lower eave</text>
+        <line x1="160" y1="190" x2="178" y2="190" stroke="#6B3A0B" stroke-width="0.8" stroke-dasharray="3 2"/>
+        <text font-size="10" fill="#5a3a1a" x="530" y="240" font-family="system-ui,sans-serif" font-weight="600">丁檐</text>
+        <line x1="528" y1="242" x2="486" y2="242" stroke="#5a3a1a" stroke-width="0.8" stroke-dasharray="3 2"/>
+      </g>
+
+      <!-- RAMMED EARTH WALL -->
+      <g id="g-wall" opacity="0" style="transition:opacity .45s">
+        <rect x="196" y="282" width="288" height="58" rx="0" fill="#c9935a" opacity="0.6"/>
+        <rect x="296" y="300" width="88" height="40" rx="0" fill="#8B4513" opacity="0.6"/>
+        <ellipse cx="340" cy="300" rx="44" ry="16" fill="#6B3A0B" opacity="0.7"/>
+        <rect x="310" y="306" width="60" height="34" rx="1" fill="#4A2800" opacity="0.9"/>
+        <text font-size="11" fill="#8B4513" x="530" y="305" font-family="system-ui,sans-serif" font-weight="700">城门洞 Gate arch</text>
+        <line x1="528" y1="307" x2="488" y2="316" stroke="#8B4513" stroke-width="0.8" stroke-dasharray="3 2"/>
+        <text font-size="10" fill="#888" x="112" y="320" font-family="system-ui,sans-serif">排水沟 Drainage</text>
+        <line x1="194" y1="318" x2="176" y2="318" stroke="#888" stroke-width="0.8" stroke-dasharray="3 2"/>
+      </g>
+
+      <!-- FOUNDATION PLATFORM (always visible) -->
+      <g id="g-platform">
+        <polygon points="100,340 196,282 484,282 580,340 580,396 100,396" fill="#B8833A" opacity="0.85" stroke="#8B5A2B" stroke-width="0.8"/>
+        <line x1="100" y1="355" x2="580" y2="355" stroke="#8B5A2B" stroke-width="0.5" opacity="0.4"/>
+        <line x1="100" y1="370" x2="580" y2="370" stroke="#8B5A2B" stroke-width="0.5" opacity="0.4"/>
+        <line x1="100" y1="385" x2="580" y2="385" stroke="#8B5A2B" stroke-width="0.5" opacity="0.4"/>
+        <line x1="100" y1="340" x2="196" y2="282" stroke="#6B3A0B" stroke-width="1" opacity="0.6"/>
+        <line x1="580" y1="340" x2="484" y2="282" stroke="#6B3A0B" stroke-width="1" opacity="0.6"/>
+        <text font-size="12" fill="#6B3A0B" x="340" y="372" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700">夯土台基 — Rammed earth platform</text>
+        <line x1="88" y1="282" x2="88" y2="396" stroke="#6B3A0B" stroke-width="1" marker-end="url(#arr)"/>
+        <text font-size="10" fill="#6B3A0B" x="78" y="342" text-anchor="middle" font-family="system-ui,sans-serif" transform="rotate(-90,78,342)">12 metres</text>
+        <rect x="60" y="396" width="560" height="16" rx="3" fill="#888780" opacity="0.5"/>
+        <text font-size="11" fill="#5F5E5A" x="340" y="408" text-anchor="middle" font-family="system-ui,sans-serif">地面 Ground level</text>
+      </g>
+
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#6B3A0B" stroke-width="1.5" stroke-linecap="round"/>
+        </marker>
+      </defs>
+
+    </svg>
+  </div>
+
+  <div class="detail-card">
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+const stages = [
+  {
+    title: "Stage 1 — The Foundation Platform",
+    zh: "夯土台基 Hāngtǔ Táijī",
+    show: [],
+    hide: ["g-wall","g-lower","g-middle","g-upper"],
+    layers: [
+      { color: "#B8833A", name: "Rammed earth core (夯土)", zh: "夯土", desc: "The entire gate tower sits on a massive rammed earth platform up to 12 metres high. Layer upon layer of loess clay was compacted using wooden ramming tools, each layer precisely 120–150mm thick before compression." },
+      { color: "#8B5A2B", name: "Battered profile (收分)", zh: "收分", desc: "The platform sides slope inward from base to top — wider at the bottom, narrower at the top. This battered profile distributes the enormous weight outward and downward, making the structure virtually impossible to topple." },
+      { color: "#6B3A0B", name: "Brick facing (砖砌面)", zh: "砖砌面", desc: "The earth core is encased in large fired grey bricks, laid in precise courses with glutinous rice mortar between each layer. The brick facing protects the earth core from rain erosion and enemy attack." }
+    ]
+  },
+  {
+    title: "Stage 2 — The Rammed Earth Wall & Gate Arch",
+    zh: "城墙与券洞 Chéngqiáng yǔ Quàndòng",
+    show: ["g-wall"],
+    hide: ["g-lower","g-middle","g-upper"],
+    layers: [
+      { color: "#c9935a", name: "Wall body (墙体)", zh: "墙体", desc: "Rising from the platform, the main wall body continues the rammed earth and brick construction upward to form the base of the gate tower. At this level the wall is 15–18 metres wide at its base." },
+      { color: "#4A2800", name: "Gate arch passage (券洞)", zh: "券洞", desc: "A perfect semicircular brick arch tunnels through the wall at each gate — the vaulted passage that allowed people, horses, and carts to pass through. The wedge-shaped bricks press together under the wall's weight, making the arch stronger the heavier the load above." },
+      { color: "#888", name: "Drainage channel (排水沟)", zh: "排水沟", desc: "A stone-carved drainage channel runs along the base of the wall at ground level, carrying rainwater away from the rammed earth core. Without drainage, groundwater would soften the earth and collapse the structure from below." }
+    ]
+  },
+  {
+    title: "Stage 3 — The Lower Eave (下檐)",
+    zh: "下檐 Xià Yán",
+    show: ["g-wall","g-lower"],
+    hide: ["g-middle","g-upper"],
+    layers: [
+      { color: "#EF9F27", name: "Lower roof (下檐屋面)", zh: "下檐屋面", desc: "The first of three sweeping tiled roofs. Its wide overhang — made possible by the dǒugǒng bracket system — protects the walls and columns below from rainwater. Imperial yellow glazed tiles signal the building's highest military rank." },
+      { color: "#8B5A2B", name: "Bracket system (斗拱)", zh: "斗拱", desc: "A full row of dǒugǒng bracket clusters runs along the eave, supporting the roof overhang without any outward wall support. This is the same bracket system used in the Forbidden City — transferring all roof weight cleanly down into the columns." },
+      { color: "#C04828", name: "Red columns (红柱)", zh: "红柱", desc: "Vermilion-red lacquered timber columns support the building at this level. Large window panels between the columns allowed soldiers inside to observe the approaches to the gate in all directions." }
+    ]
+  },
+  {
+    title: "Stage 4 — The Middle Tier (中檐)",
+    zh: "中檐 Zhōng Yán",
+    show: ["g-wall","g-lower","g-middle"],
+    hide: ["g-upper"],
+    layers: [
+      { color: "#EF9F27", name: "Middle roof (中檐屋面)", zh: "中檐屋面", desc: "The second roof level, set back from the lower eave and rising above it. Each successive roof level is smaller and more steeply pitched than the one below, creating the rhythmic layered silhouette visible from miles away across the plain." },
+      { color: "#8B4513", name: "Command hall windows (窗)", zh: "窗", desc: "The middle tier housed the command hall — the working space for the garrison commander and his officers. Large lattice windows filled with translucent paper allowed light in while maintaining security." },
+      { color: "#8B5A2B", name: "Balcony railing (栏杆)", zh: "栏杆", desc: "A wooden balcony with carved railings projects from the middle tier, allowing officers to observe the surrounding countryside and communicate with troops on the wall top below." }
+    ]
+  },
+  {
+    title: "Stage 5 — The Upper Roof (上檐)",
+    zh: "上檐 Shàng Yán",
+    show: ["g-wall","g-lower","g-middle","g-upper"],
+    hide: [],
+    layers: [
+      { color: "#BA7517", name: "Upper roof (上檐屋面)", zh: "上檐屋面", desc: "The topmost and smallest roof, with the steepest pitch. Its ridge is capped with a decorative ridge tile and guardian beasts (走兽), their number indicating the building's military rank. The triple-roof form (三重檐) was reserved for the most important imperial buildings." },
+      { color: "#6B3A0B", name: "Ridge tile (正脊)", zh: "正脊", desc: "The horizontal ridge running along the peak of the uppermost roof is capped with specially shaped ceramic ridge tiles that prevent rainwater entry. The ends curl upward in the classic Chinese roof form." },
+      { color: "#8B5A2B", name: "Upper bracket clusters (斗拱)", zh: "斗拱", desc: "Even at the topmost level, a full set of bracket clusters supports the eave overhang. The dǒugǒng system appears at every roof level, creating a consistent structural rhythm from bottom to top of the building." }
+    ]
+  },
+  {
+    title: "Stage 6 — The Complete Gate Tower",
+    zh: "完整城楼 Wánzhěng Chénglóu",
+    show: ["g-wall","g-lower","g-middle","g-upper"],
+    hide: [],
+    layers: [
+      { color: "#5a3a1a", name: "Three-tier roof (三重檐)", zh: "三重檐", desc: "The triple-eave roof form was the highest architectural rank in Ming Dynasty military architecture. Only the most important gate towers were permitted three full roof levels. From a distance, the three sweeping layers made the gate tower recognisable as a symbol of imperial authority." },
+      { color: "#BA7517", name: "Total height", zh: "总高度", desc: "The complete gate tower rises approximately 36 metres from ground level — about the height of a 12-storey modern building. The platform alone accounts for 12 metres; the timber tower above adds another 24 metres of height." },
+      { color: "#888780", name: "650 years standing", zh: "650年历史", desc: "Built in 1370–1378 AD during the early Ming Dynasty, the Xi'an city wall and gate towers have stood for over 650 years — through earthquakes, wars, floods, and the upheavals of modern China — a testament to the mastery of rammed earth construction and timber-frame architecture." }
+    ]
+  }
+];
+
+function show(i) {
+  const s = stages[i];
+  document.querySelectorAll('.stage-btn').forEach((b, j) => b.classList.toggle('active', j === i));
+  const allIds = ["g-wall","g-lower","g-middle","g-upper"];
+  allIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (s.hide.includes(id)) el.style.opacity = '0';
+    else if (s.show.includes(id)) el.style.opacity = '1';
+  });
+
+  let html = `<div class="stage-title">${s.title} <span class="zh">${s.zh}</span></div>`;
+  s.layers.forEach(l => {
+    html += `<div class="layer-row">
+      <div class="layer-dot" style="background:${l.color}"></div>
+      <div class="layer-name">${l.name}<span class="zh">${l.zh}</span></div>
+      <div class="layer-desc">${l.desc}</div>
+    </div>`;
+  });
+  document.getElementById('detail-content').innerHTML = html;
+}
+
+show(0);
+</script>
+</body>
+</html>

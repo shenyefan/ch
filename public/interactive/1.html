@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How the Forbidden City Was Built</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #fff;
+      color: #1a1a18;
+      padding: 24px 16px;
+    }
+
+    .widget {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 6px;
+      color: #1a1a18;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #5f5e5a;
+      margin-bottom: 24px;
+    }
+
+    .stage-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .stage-btn {
+      border: 1px solid #d3d1c7;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all .2s;
+      background: #f5f4f0;
+      color: #5f5e5a;
+    }
+
+    .stage-btn.active {
+      background: #BA7517;
+      color: #fff;
+      border-color: #BA7517;
+    }
+
+    .stage-btn:hover:not(.active) {
+      background: #e8e6e0;
+    }
+
+    svg {
+      width: 100%;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .detail-card {
+      border-radius: 12px;
+      padding: 16px 20px;
+      background: #f5f4f0;
+      border: 1px solid #d3d1c7;
+    }
+
+    .stage-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a18;
+      margin-bottom: 12px;
+    }
+
+    .stage-title .zh {
+      font-size: 12px;
+      color: #888780;
+      font-weight: 400;
+      margin-left: 6px;
+    }
+
+    .layer-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #d3d1c7;
+    }
+
+    .layer-row:last-child {
+      border-bottom: none;
+    }
+
+    .layer-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .layer-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a18;
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+
+    .layer-name .zh {
+      font-size: 12px;
+      color: #888780;
+      font-weight: 400;
+      margin-left: 4px;
+    }
+
+    .layer-desc {
+      font-size: 13px;
+      color: #5f5e5a;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 500px) {
+      .layer-row { flex-direction: column; gap: 4px; }
+      .layer-name { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+<div class="widget">
+  <h1>How the Forbidden City Was Built</h1>
+  <p class="subtitle">Click each stage to explore the construction process</p>
+
+  <div class="stage-btns" id="stage-btns">
+    <button class="stage-btn active" onclick="show(0)">① Foundation</button>
+    <button class="stage-btn" onclick="show(1)">② Timber Frame</button>
+    <button class="stage-btn" onclick="show(2)">③ Bracket System</button>
+    <button class="stage-btn" onclick="show(3)">④ Roof</button>
+    <button class="stage-btn" onclick="show(4)">⑤ Decoration</button>
+    <button class="stage-btn" onclick="show(5)">⑥ Final Assembly</button>
+  </div>
+
+  <svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
+    <!-- Ground platform -->
+    <rect x="60" y="170" width="560" height="30" rx="4" fill="#D3D1C7" stroke="#B4B2A9" stroke-width="0.5"/>
+    <text font-size="12" fill="#5F5E5A" x="340" y="190" text-anchor="middle" font-family="system-ui,sans-serif">White marble terrace (台基 Táijī)</text>
+
+    <!-- Columns -->
+    <g id="g-cols" opacity="0" style="transition:opacity .4s">
+      <rect x="110" y="80" width="18" height="92" rx="2" fill="#E8580A" stroke="#BA4508" stroke-width="0.5"/>
+      <rect x="200" y="80" width="18" height="92" rx="2" fill="#E8580A" stroke="#BA4508" stroke-width="0.5"/>
+      <rect x="290" y="80" width="18" height="92" rx="2" fill="#E8580A" stroke="#BA4508" stroke-width="0.5"/>
+      <rect x="380" y="80" width="18" height="92" rx="2" fill="#E8580A" stroke="#BA4508" stroke-width="0.5"/>
+      <rect x="470" y="80" width="18" height="92" rx="2" fill="#E8580A" stroke="#BA4508" stroke-width="0.5"/>
+      <rect x="555" y="80" width="18" height="92" rx="2" fill="#E8580A" stroke="#BA4508" stroke-width="0.5"/>
+    </g>
+
+    <!-- Brackets -->
+    <g id="g-brackets" opacity="0" style="transition:opacity .4s">
+      <rect x="95"  y="62" width="46" height="20" rx="3" fill="#8B5A2B" stroke="#6B3A0B" stroke-width="0.5"/>
+      <rect x="185" y="62" width="46" height="20" rx="3" fill="#8B5A2B" stroke="#6B3A0B" stroke-width="0.5"/>
+      <rect x="275" y="62" width="46" height="20" rx="3" fill="#8B5A2B" stroke="#6B3A0B" stroke-width="0.5"/>
+      <rect x="365" y="62" width="46" height="20" rx="3" fill="#8B5A2B" stroke="#6B3A0B" stroke-width="0.5"/>
+      <rect x="455" y="62" width="46" height="20" rx="3" fill="#8B5A2B" stroke="#6B3A0B" stroke-width="0.5"/>
+      <rect x="540" y="62" width="46" height="20" rx="3" fill="#8B5A2B" stroke="#6B3A0B" stroke-width="0.5"/>
+    </g>
+
+    <!-- Roof -->
+    <g id="g-roof" opacity="0" style="transition:opacity .4s">
+      <polygon points="60,62 340,14 620,62" fill="#EF9F27" stroke="#BA7517" stroke-width="0.5"/>
+      <polygon points="60,62 340,22 620,62 620,68 340,28 60,68" fill="#BA7517" stroke="#854F0B" stroke-width="0.5"/>
+    </g>
+
+    <!-- Decoration overlay -->
+    <g id="g-deco" opacity="0" style="transition:opacity .4s">
+      <rect x="60"  y="62" width="560" height="16" fill="#1D9E75" opacity="0.25"/>
+      <rect x="60"  y="62" width="560" height="4"  fill="#1D9E75" opacity="0.5"/>
+      <rect x="110" y="80" width="18"  height="92" rx="2" fill="#D4537E" opacity="0.3"/>
+      <rect x="200" y="80" width="18"  height="92" rx="2" fill="#D4537E" opacity="0.3"/>
+      <rect x="290" y="80" width="18"  height="92" rx="2" fill="#D4537E" opacity="0.3"/>
+      <rect x="380" y="80" width="18"  height="92" rx="2" fill="#D4537E" opacity="0.3"/>
+      <rect x="470" y="80" width="18"  height="92" rx="2" fill="#D4537E" opacity="0.3"/>
+      <rect x="555" y="80" width="18"  height="92" rx="2" fill="#D4537E" opacity="0.3"/>
+    </g>
+
+    <!-- Foundation stones -->
+    <g id="g-found">
+      <circle cx="119" cy="172" r="6" fill="#888780" stroke="#5F5E5A" stroke-width="0.5"/>
+      <circle cx="209" cy="172" r="6" fill="#888780" stroke="#5F5E5A" stroke-width="0.5"/>
+      <circle cx="299" cy="172" r="6" fill="#888780" stroke="#5F5E5A" stroke-width="0.5"/>
+      <circle cx="389" cy="172" r="6" fill="#888780" stroke="#5F5E5A" stroke-width="0.5"/>
+      <circle cx="479" cy="172" r="6" fill="#888780" stroke="#5F5E5A" stroke-width="0.5"/>
+      <circle cx="564" cy="172" r="6" fill="#888780" stroke="#5F5E5A" stroke-width="0.5"/>
+      <text font-size="12" fill="#5F5E5A" x="340" y="140" text-anchor="middle" font-family="system-ui,sans-serif">Column base stones placed on terrace</text>
+    </g>
+  </svg>
+
+  <div class="detail-card" id="detail-box">
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+const stages = [
+  {
+    title: "Stage 1 — Laying the Foundation",
+    zh: "台基 Táijī",
+    showIds: ["g-found"],
+    hideIds: ["g-cols","g-brackets","g-roof","g-deco"],
+    layers: [
+      { color: "#D3D1C7", name: "White marble terrace", zh: "台基", desc: "A raised stone platform up to 8 metres high, made of white marble quarried in Fangshan, 70 km away." },
+      { color: "#888780", name: "Column base stones",   zh: "柱础", desc: "Large circular stones set precisely into the platform mark where each wooden column will stand, protecting timber from moisture." },
+      { color: "#B4B2A9", name: "Rammed earth fill",   zh: "夯土", desc: "The platform core is compacted layers of earth and lime, giving the structure immense stability." }
+    ]
+  },
+  {
+    title: "Stage 2 — Raising the Timber Frame",
+    zh: "木作 Mùzuò",
+    showIds: ["g-found","g-cols"],
+    hideIds: ["g-brackets","g-roof","g-deco"],
+    layers: [
+      { color: "#E8580A", name: "Red-painted columns", zh: "金柱/檐柱", desc: "Giant nanmu and pine logs — sometimes 12 m tall — floated down rivers from forests in Sichuan and Yunnan." },
+      { color: "#C04828", name: "Horizontal beams",    zh: "梁",       desc: "Heavy beams span between columns to form the load-bearing skeleton. No nails — only interlocking joinery." },
+      { color: "#8B5A2B", name: "Purlin rails",        zh: "檩",       desc: "Smaller horizontal timbers run along the roof slope to carry the rafters above." }
+    ]
+  },
+  {
+    title: "Stage 3 — The Bracket System",
+    zh: "斗拱 Dǒugǒng",
+    showIds: ["g-found","g-cols","g-brackets"],
+    hideIds: ["g-roof","g-deco"],
+    layers: [
+      { color: "#8B5A2B", name: "Bracket clusters",  zh: "斗拱", desc: "Sets of interlocking wooden blocks and arms (over 30 types!) project outward from column tops, spreading the roof's weight." },
+      { color: "#6B3A0B", name: "Cantilever arms",   zh: "拱",   desc: "Each arm reaches further out, allowing huge roof overhangs without any outward wall support." },
+      { color: "#A06830", name: "Block units",        zh: "斗",   desc: "Square blocks sit at each joint — the whole cluster acts like a spring, absorbing earthquake forces." }
+    ]
+  },
+  {
+    title: "Stage 4 — Tiling the Roof",
+    zh: "瓦作 Wǎzuò",
+    showIds: ["g-found","g-cols","g-brackets","g-roof"],
+    hideIds: ["g-deco"],
+    layers: [
+      { color: "#EF9F27", name: "Yellow glazed tiles",   zh: "黄色琉璃瓦", desc: "Imperial yellow — reserved exclusively for the emperor — fired at kilns in Mentougou. Over 1 million tiles cover the main halls." },
+      { color: "#BA7517", name: "Hip-and-gable roof",    zh: "庑殿顶",     desc: "The four-sided 'hip' roof is the highest imperial form, with a gentle double curve that sweeps upward at the corners." },
+      { color: "#854F0B", name: "Ridge guardian beasts", zh: "走兽",       desc: "Ceramic guardian figures (up to 10 per ridge) signal a building's rank — the more figures, the higher the status." }
+    ]
+  },
+  {
+    title: "Stage 5 — Painted Decoration",
+    zh: "彩画作 Cǎihuàzuò",
+    showIds: ["g-found","g-cols","g-brackets","g-roof","g-deco"],
+    hideIds: [],
+    layers: [
+      { color: "#1D9E75", name: "Mineral pigment painting",  zh: "旋子彩画", desc: "Swirling dragon and floral patterns painted in lapis lazuli, malachite, and lead white on all exposed timber." },
+      { color: "#D4537E", name: "Vermilion lacquer columns", zh: "红漆柱",   desc: "Columns are lacquered deep red — symbolising prosperity — and sealed against moisture and insects." },
+      { color: "#533AB7", name: "Gold leaf highlights",      zh: "贴金",     desc: "Dragon motifs and key ornamental elements are finished with pure gold leaf, still gleaming after 600 years." }
+    ]
+  },
+  {
+    title: "Stage 6 — Final Assembly & Workforce",
+    zh: "完成 Wánchéng",
+    showIds: ["g-found","g-cols","g-brackets","g-roof","g-deco"],
+    hideIds: [],
+    layers: [
+      { color: "#378ADD", name: "Massive workforce",  zh: "工匠",  desc: "Over 1 million workers and 100,000 skilled craftsmen laboured for 14 years (1406–1420) under the Yongle Emperor." },
+      { color: "#185FA5", name: "Bamboo scaffolding", zh: "脚手架", desc: "Bamboo poles lashed together formed scaffolding around every storey — flexible enough to sway without breaking." },
+      { color: "#0C447C", name: "Imperial oversight", zh: "督造",  desc: "Master architects used detailed scale models and technical drawings to coordinate all the trades across 980 buildings." }
+    ]
+  }
+];
+
+function show(i) {
+  const s = stages[i];
+  document.querySelectorAll('.stage-btn').forEach((b, j) => b.classList.toggle('active', j === i));
+  s.showIds.forEach(id => { const el = document.getElementById(id); if (el) el.style.opacity = '1'; });
+  s.hideIds.forEach(id => { const el = document.getElementById(id); if (el) el.style.opacity = '0'; });
+
+  let html = `<div class="stage-title">${s.title} <span class="zh">${s.zh}</span></div>`;
+  s.layers.forEach(l => {
+    html += `<div class="layer-row">
+      <div class="layer-dot" style="background:${l.color}"></div>
+      <div class="layer-name">${l.name}<span class="zh">${l.zh}</span></div>
+      <div class="layer-desc">${l.desc}</div>
+    </div>`;
+  });
+  document.getElementById('detail-content').innerHTML = html;
+}
+
+show(0);
+</script>
+</body>
+</html>

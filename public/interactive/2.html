@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Dǒugǒng — China's Bracket System</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: #f5f0e8;
+      color: #2a1f0e;
+      padding: 24px 16px;
+    }
+
+    .widget {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 6px;
+      color: #2a1f0e;
+      letter-spacing: 0.01em;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #7a6a52;
+      margin-bottom: 24px;
+      font-family: system-ui, sans-serif;
+    }
+
+    .stage-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .stage-btn {
+      border: 1px solid #c8b89a;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all .2s;
+      background: #ede8de;
+      color: #7a6a52;
+      font-family: system-ui, sans-serif;
+    }
+
+    .stage-btn.active {
+      background: #8B5A2B;
+      color: #fff;
+      border-color: #8B5A2B;
+    }
+
+    .stage-btn:hover:not(.active) {
+      background: #e0d8ca;
+    }
+
+    .diagram-wrap {
+      background: #ede8de;
+      border-radius: 12px;
+      border: 1px solid #c8b89a;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    svg {
+      width: 100%;
+      display: block;
+    }
+
+    .detail-card {
+      border-radius: 12px;
+      padding: 16px 20px;
+      background: #ede8de;
+      border: 1px solid #c8b89a;
+    }
+
+    .stage-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2a1f0e;
+      margin-bottom: 12px;
+      font-family: Georgia, serif;
+    }
+
+    .stage-title .zh {
+      font-size: 12px;
+      color: #8B5A2B;
+      font-weight: 400;
+      margin-left: 6px;
+      font-family: system-ui, sans-serif;
+    }
+
+    .layer-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #c8b89a;
+    }
+
+    .layer-row:last-child { border-bottom: none; }
+
+    .layer-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .layer-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2a1f0e;
+      min-width: 170px;
+      flex-shrink: 0;
+      font-family: system-ui, sans-serif;
+    }
+
+    .layer-name .zh {
+      font-size: 12px;
+      color: #8B5A2B;
+      font-weight: 400;
+      margin-left: 4px;
+    }
+
+    .layer-desc {
+      font-size: 13px;
+      color: #5a4a32;
+      line-height: 1.5;
+      font-family: system-ui, sans-serif;
+    }
+
+    @media (max-width: 500px) {
+      .layer-row { flex-direction: column; gap: 4px; }
+      .layer-name { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+<div class="widget">
+  <h1>The Dǒugǒng (斗拱)</h1>
+  <p class="subtitle">Click each part to explore China's most ingenious bracket system</p>
+
+  <div class="stage-btns">
+    <button class="stage-btn active" onclick="show(0)">① The Column</button>
+    <button class="stage-btn" onclick="show(1)">② Seat Block (斗)</button>
+    <button class="stage-btn" onclick="show(2)">③ Bow Arms (拱)</button>
+    <button class="stage-btn" onclick="show(3)">④ Diagonal Arm (昂)</button>
+    <button class="stage-btn" onclick="show(4)">⑤ Eave Beams</button>
+    <button class="stage-btn" onclick="show(5)">⑥ Full System</button>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- ROOF TILES -->
+      <rect x="40" y="20" width="600" height="18" rx="3" fill="#BA7517" opacity="0.9"/>
+      <rect x="40" y="38" width="600" height="8"  rx="2" fill="#EF9F27" opacity="0.7"/>
+
+      <!-- EAVE BEAMS -->
+      <g id="g-beams" opacity="0" style="transition:opacity .4s">
+        <rect x="40"  y="56" width="600" height="14" rx="2" fill="#6B3A0B" opacity="0.9"/>
+        <text font-size="10" fill="#FAC775" x="344" y="67" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="600">挑檐枋 — Eave-projecting beam</text>
+        <rect x="80"  y="74" width="520" height="12" rx="2" fill="#8B5A2B" opacity="0.85"/>
+        <text font-size="10" fill="#FAC775" x="344" y="84" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="600">正心枋 — Central tie beam</text>
+        <rect x="120" y="90" width="440" height="10" rx="2" fill="#A06830" opacity="0.8"/>
+        <text font-size="10" fill="#FAC775" x="344" y="99" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="600">里拽枋 — Inner tie beam</text>
+      </g>
+
+      <!-- RAFTERS -->
+      <g id="g-rafters" opacity="0" style="transition:opacity .4s">
+        <line x1="80"  y1="56" x2="60"  y2="20" stroke="#5C3A1A" stroke-width="3" stroke-linecap="round"/>
+        <line x1="160" y1="56" x2="140" y2="20" stroke="#5C3A1A" stroke-width="3" stroke-linecap="round"/>
+        <line x1="250" y1="56" x2="230" y2="20" stroke="#5C3A1A" stroke-width="3" stroke-linecap="round"/>
+        <line x1="340" y1="56" x2="320" y2="20" stroke="#5C3A1A" stroke-width="3" stroke-linecap="round"/>
+        <line x1="430" y1="56" x2="410" y2="20" stroke="#5C3A1A" stroke-width="3" stroke-linecap="round"/>
+        <line x1="520" y1="56" x2="500" y2="20" stroke="#5C3A1A" stroke-width="3" stroke-linecap="round"/>
+        <line x1="610" y1="56" x2="590" y2="20" stroke="#5C3A1A" stroke-width="3" stroke-linecap="round"/>
+        <text font-size="10" fill="#5C3A1A" x="58" y="16" font-family="system-ui,sans-serif" font-weight="600">飞椽</text>
+      </g>
+
+      <!-- LEFT BRACKET CLUSTER -->
+      <g id="g-arms-L" opacity="0" style="transition:opacity .4s">
+        <rect x="60"  y="102" width="80" height="10" rx="5" fill="#8B5A2B"/>
+        <rect x="70"  y="116" width="60" height="10" rx="5" fill="#A06830"/>
+        <rect x="80"  y="130" width="40" height="10" rx="5" fill="#8B5A2B"/>
+        <rect x="92"  y="98"  width="12" height="6" rx="1" fill="#6B3A0B"/>
+        <rect x="116" y="98"  width="12" height="6" rx="1" fill="#6B3A0B"/>
+        <rect x="97"  y="112" width="12" height="6" rx="1" fill="#6B3A0B"/>
+        <rect x="108" y="126" width="12" height="6" rx="1" fill="#6B3A0B"/>
+      </g>
+
+      <!-- RIGHT BRACKET CLUSTER -->
+      <g id="g-arms-R" opacity="0" style="transition:opacity .4s">
+        <rect x="540" y="102" width="80" height="10" rx="5" fill="#8B5A2B"/>
+        <rect x="550" y="116" width="60" height="10" rx="5" fill="#A06830"/>
+        <rect x="560" y="130" width="40" height="10" rx="5" fill="#8B5A2B"/>
+        <rect x="552" y="98"  width="12" height="6" rx="1" fill="#6B3A0B"/>
+        <rect x="576" y="98"  width="12" height="6" rx="1" fill="#6B3A0B"/>
+        <rect x="557" y="112" width="12" height="6" rx="1" fill="#6B3A0B"/>
+        <rect x="564" y="126" width="12" height="6" rx="1" fill="#6B3A0B"/>
+      </g>
+
+      <!-- CENTRE BRACKET CLUSTER -->
+      <g id="g-arms-C" opacity="0" style="transition:opacity .4s">
+        <rect x="300" y="102" width="80" height="10" rx="5" fill="#8B5A2B"/>
+        <rect x="310" y="116" width="60" height="10" rx="5" fill="#A06830"/>
+        <rect x="320" y="130" width="40" height="10" rx="5" fill="#8B5A2B"/>
+        <rect x="332" y="98"  width="12" height="6" rx="1" fill="#6B3A0B"/>
+        <rect x="356" y="98"  width="12" height="6" rx="1" fill="#6B3A0B"/>
+        <rect x="337" y="112" width="12" height="6" rx="1" fill="#6B3A0B"/>
+        <rect x="344" y="126" width="12" height="6" rx="1" fill="#6B3A0B"/>
+      </g>
+
+      <!-- DIAGONAL ARMS (昂) -->
+      <g id="g-ang" opacity="0" style="transition:opacity .4s">
+        <line x1="100" y1="140" x2="60"  y2="100" stroke="#5C3A1A" stroke-width="4" stroke-linecap="round"/>
+        <line x1="100" y1="140" x2="140" y2="100" stroke="#5C3A1A" stroke-width="4" stroke-linecap="round"/>
+        <line x1="340" y1="140" x2="300" y2="100" stroke="#5C3A1A" stroke-width="4" stroke-linecap="round"/>
+        <line x1="340" y1="140" x2="380" y2="100" stroke="#5C3A1A" stroke-width="4" stroke-linecap="round"/>
+        <line x1="580" y1="140" x2="540" y2="100" stroke="#5C3A1A" stroke-width="4" stroke-linecap="round"/>
+        <line x1="580" y1="140" x2="620" y2="100" stroke="#5C3A1A" stroke-width="4" stroke-linecap="round"/>
+        <text font-size="11" fill="#5C3A1A" x="440" y="116" font-family="system-ui,sans-serif" font-weight="700">昂 (Áng)</text>
+        <line x1="438" y1="118" x2="395" y2="124" stroke="#5C3A1A" stroke-width="0.8" stroke-dasharray="3 2"/>
+      </g>
+
+      <!-- SEAT BLOCKS (斗) -->
+      <g id="g-dou" opacity="0" style="transition:opacity .4s">
+        <rect x="84"  y="140" width="32" height="16" rx="3" fill="#4A2800"/>
+        <rect x="80"  y="154" width="40" height="10" rx="2" fill="#6B3A0B"/>
+        <rect x="324" y="140" width="32" height="16" rx="3" fill="#4A2800"/>
+        <rect x="320" y="154" width="40" height="10" rx="2" fill="#6B3A0B"/>
+        <rect x="564" y="140" width="32" height="16" rx="3" fill="#4A2800"/>
+        <rect x="560" y="154" width="40" height="10" rx="2" fill="#6B3A0B"/>
+        <text font-size="11" fill="#4A2800" x="200" y="152" font-family="system-ui,sans-serif" font-weight="700">坐斗 (Zuò dǒu)</text>
+        <line x1="198" y1="154" x2="128" y2="154" stroke="#4A2800" stroke-width="0.8" stroke-dasharray="3 2"/>
+      </g>
+
+      <!-- COLUMNS -->
+      <g id="g-cols">
+        <rect x="90"  y="164" width="20" height="96" rx="3" fill="#C04828"/>
+        <rect x="330" y="164" width="20" height="96" rx="3" fill="#C04828"/>
+        <rect x="570" y="164" width="20" height="96" rx="3" fill="#C04828"/>
+        <text font-size="11" fill="#C04828" x="490" y="220" font-family="system-ui,sans-serif" font-weight="700">柱 Column</text>
+        <line x1="488" y1="222" x2="450" y2="222" stroke="#C04828" stroke-width="0.8" stroke-dasharray="3 2"/>
+        <ellipse cx="100" cy="262" rx="18" ry="6" fill="#888" opacity="0.6"/>
+        <ellipse cx="340" cy="262" rx="18" ry="6" fill="#888" opacity="0.6"/>
+        <ellipse cx="580" cy="262" rx="18" ry="6" fill="#888" opacity="0.6"/>
+      </g>
+
+      <!-- ARCHITRAVE (额枋) -->
+      <g id="g-efang" opacity="0" style="transition:opacity .4s">
+        <rect x="110" y="160" width="220" height="12" rx="2" fill="#6B3A0B" opacity="0.9"/>
+        <rect x="350" y="160" width="220" height="12" rx="2" fill="#6B3A0B" opacity="0.9"/>
+        <text font-size="10" fill="#FAC775" x="220" y="170" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="600">额枋 Architrave</text>
+        <text font-size="10" fill="#FAC775" x="460" y="170" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="600">额枋 Architrave</text>
+      </g>
+
+      <!-- PLATFORM -->
+      <rect x="40" y="268" width="600" height="24" rx="4" fill="#D3D1C7" stroke="#B4B2A9" stroke-width="0.5"/>
+      <text font-size="11" fill="#5F5E5A" x="340" y="284" text-anchor="middle" font-family="system-ui,sans-serif">台基 — White marble terrace platform</text>
+
+    </svg>
+  </div>
+
+  <div class="detail-card">
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+const stages = [
+  {
+    title: "The Column — Foundation of the Bracket",
+    zh: "柱 Zhù",
+    show: [],
+    hide: ["g-dou","g-arms-L","g-arms-R","g-arms-C","g-ang","g-beams","g-rafters","g-efang"],
+    layers: [
+      { color: "#C04828", name: "Red-painted column", zh: "柱", desc: "The giant nanmu or pine timber column carries all the roof weight straight down to the stone base below. No bracket system works without a strong column at its heart." },
+      { color: "#888", name: "Column base stone", zh: "柱础", desc: "A carved circular stone sits between the timber column and the ground, preventing moisture from rotting the wood — one of the simplest and most effective details in Chinese architecture." },
+      { color: "#D3D1C7", name: "Marble terrace", zh: "台基", desc: "The raised white marble platform elevates the entire building, keeping all timber elements away from ground moisture and flooding." }
+    ]
+  },
+  {
+    title: "The Seat Block — Where It All Begins",
+    zh: "坐斗 Zuò Dǒu",
+    show: ["g-dou"],
+    hide: ["g-arms-L","g-arms-R","g-arms-C","g-ang","g-beams","g-rafters","g-efang"],
+    layers: [
+      { color: "#4A2800", name: "Seat block (坐斗)", zh: "坐斗", desc: "The large square block sitting directly on top of the column capital. This is the foundation of the entire bracket cluster — everything stacks on top of it. It is the largest and heaviest block in the system." },
+      { color: "#6B3A0B", name: "Cap plate", zh: "斗欹", desc: "A flat plate on top of the seat block provides a stable, level surface for the bow arms above to rest on, distributing force evenly in all directions." },
+      { color: "#8B5A2B", name: "Small bearing blocks (升)", zh: "升", desc: "Smaller square blocks placed at every joint between arms and beams throughout the cluster. Their name means 'to rise' — they literally lift each layer higher than the last." }
+    ]
+  },
+  {
+    title: "The Bow Arms — Spreading the Load",
+    zh: "拱 Gǒng",
+    show: ["g-dou","g-arms-L","g-arms-R","g-arms-C"],
+    hide: ["g-ang","g-beams","g-rafters","g-efang"],
+    layers: [
+      { color: "#8B5A2B", name: "Bow arms (拱)", zh: "拱", desc: "Curved bow-shaped arms extend outward from the seat block in all four directions. Each layer of arms extends further out than the one below, spreading the roof weight over a wider and wider area — like an upside-down tree." },
+      { color: "#A06830", name: "Cross arms (翘)", zh: "翘", desc: "Short upward-curved arms project at 90 degrees to the main bow arms, building the bracket cluster outward in two directions simultaneously. Together they give the cluster its three-dimensional flower-like form." },
+      { color: "#6B3A0B", name: "Bearing blocks (升)", zh: "升", desc: "At every intersection of arms, a small square bearing block transfers the load from one arm to the next. A single bracket cluster can contain over 30 of these blocks, each carved precisely to fit." }
+    ]
+  },
+  {
+    title: "The Diagonal Arm — The Cantilever",
+    zh: "昂 Áng",
+    show: ["g-dou","g-arms-L","g-arms-R","g-arms-C","g-ang"],
+    hide: ["g-beams","g-rafters","g-efang"],
+    layers: [
+      { color: "#5C3A1A", name: "Diagonal arm (昂)", zh: "昂", desc: "The most structurally ingenious part of the system. A long diagonal timber arm acts as a lever — one end projects outward under the eaves to support the roof, the other end is pinned down inside the building. It is essentially a see-saw built into the bracket." },
+      { color: "#8B5A2B", name: "Lever principle", zh: "杠杆原理", desc: "The áng works on the same principle as a crane arm. The further it extends outward, the more roof overhang is possible — without the wall or column needing to move. This is how Chinese roofs achieve their dramatic sweeping overhangs." },
+      { color: "#A06830", name: "Seismic flexibility", zh: "抗震性", desc: "The diagonal arms can pivot slightly against each other during an earthquake, acting as natural shock absorbers. Modern engineers have tested dǒugǒng clusters and found they outperform many rigid modern structures in seismic tests." }
+    ]
+  },
+  {
+    title: "The Eave Beams — Tying It Together",
+    zh: "枋 Fāng",
+    show: ["g-dou","g-arms-L","g-arms-R","g-arms-C","g-ang","g-beams","g-rafters","g-efang"],
+    hide: [],
+    layers: [
+      { color: "#6B3A0B", name: "Eave-projecting beam (挑檐枋)", zh: "挑檐枋", desc: "The outermost horizontal beam running along the top of all the bracket clusters, tying them together along the full length of the building and carrying the flying rafters above." },
+      { color: "#8B5A2B", name: "Central tie beam (正心枋)", zh: "正心枋", desc: "The beam running directly above the column line — the structural spine of the bracket layer. All forces from the roof above converge here before travelling down into the columns." },
+      { color: "#5C3A1A", name: "Flying rafters (飞椽)", zh: "飞椽", desc: "The outermost diagonal timber pieces that create the famous upward curve at the roof corners. They extend beyond the bracket cluster to push the roofline tip skyward — the defining visual feature of Chinese imperial architecture." }
+    ]
+  },
+  {
+    title: "The Full Dǒugǒng System",
+    zh: "完整斗拱 Wánzhěng Dǒugǒng",
+    show: ["g-dou","g-arms-L","g-arms-R","g-arms-C","g-ang","g-beams","g-rafters","g-efang"],
+    hide: [],
+    layers: [
+      { color: "#BA7517", name: "No nails — pure joinery", zh: "无钉榫卯", desc: "The entire dǒugǒng system — sometimes 30+ individual pieces per cluster — is assembled without a single nail, screw, or adhesive. Pure interlocking wood joinery holds everything together, allowing slight movement under load." },
+      { color: "#8B5A2B", name: "Rank indicator", zh: "等级标志", desc: "Imperial law strictly regulated bracket size and complexity. Only the emperor's buildings could have the largest clusters. You could identify a building's owner's rank just by looking at the eaves from the street." },
+      { color: "#4A2800", name: "2,000 years of history", zh: "两千年历史", desc: "The dǒugǒng system was first recorded over 2,000 years ago. The Song Dynasty manual Yingzao Fashi (营造法式, 1103 AD) codified over 30 standard bracket types — one of the world's earliest architectural engineering handbooks." }
+    ]
+  }
+];
+
+function show(i) {
+  const s = stages[i];
+  document.querySelectorAll('.stage-btn').forEach((b, j) => b.classList.toggle('active', j === i));
+  const allIds = ["g-dou","g-arms-L","g-arms-R","g-arms-C","g-ang","g-beams","g-rafters","g-efang"];
+  allIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.opacity = s.hide.includes(id) ? '0' : (s.show.includes(id) ? '1' : el.style.opacity);
+  });
+  s.show.forEach(id => { const el = document.getElementById(id); if (el) el.style.opacity = '1'; });
+  s.hide.forEach(id => { const el = document.getElementById(id); if (el) el.style.opacity = '0'; });
+
+  let html = `<div class="stage-title">${s.title} <span class="zh">${s.zh}</span></div>`;
+  s.layers.forEach(l => {
+    html += `<div class="layer-row">
+      <div class="layer-dot" style="background:${l.color}"></div>
+      <div class="layer-name">${l.name}<span class="zh">${l.zh}</span></div>
+      <div class="layer-desc">${l.desc}</div>
+    </div>`;
+  });
+  document.getElementById('detail-content').innerHTML = html;
+}
+
+show(0);
+</script>
+</body>
+</html>
