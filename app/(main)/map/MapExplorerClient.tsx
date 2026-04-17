@@ -118,8 +118,8 @@ export default function MapExplorerClient({ language }: { language: Language }) 
         : DEFAULT_CENTER;
 
   const mapZoom = activeLandmark
-    ? Math.max(selectedCity?.zoom_level ?? 10, 15)
-    : selectedCity?.zoom_level ?? DEFAULT_ZOOM;
+    ? Math.max(Number(selectedCity?.zoom_level ?? 10), 15)
+    : Number(selectedCity?.zoom_level ?? DEFAULT_ZOOM);
 
   // Sync URL
   useEffect(() => {
