@@ -5,7 +5,15 @@ declare global {
 }
 
 function buildPool() {
-  const { DATABASE_URL, PGHOST, PGUSER, PGPASSWORD, PGDATABASE, PGPORT, NODE_ENV } = process.env;
+  const { DATABASE_URL, PGHOST, PGUSER, PGPASSWORD, PGDATABASE, PGPORT, PGSSLMODE } = process.env;
+
+  // PGSSLMODE: 'disable' | 'require' | unset
+  const ssl =
+    PGSSLMODE === 'disable'
+      ? false
+      : PGSSLMODE === 'require'
+        ? { rejectUnauthorized: false }
+        : undefined;
 
   if (DATABASE_URL) {
     try {
@@ -14,10 +22,10 @@ function buildPool() {
         throw new Error('DATABASE_URL must use postgres:// or postgresql://');
       }
 
-      return new Pool({ connectionString: DATABASE_URL });
+      return new Pool({ connectionString: DATABASE_URL, ssl });
     } catch {
       throw new Error(
-        'Invalid DATABASE_URL. Expected format: postgresql://username:password@host:port/database?sslmode=require. ' +
+        'Invalid DATABASE_URL. Expected format: postgresql://username:password@host:port/database. ' +
           'Your current value is malformed, likely missing password@host.'
       );
     }
@@ -30,7 +38,7 @@ function buildPool() {
       password: PGPASSWORD,
       database: PGDATABASE,
       port: PGPORT ? Number(PGPORT) : 5432,
-      ssl: NODE_ENV === 'production' || process.env.PGSSLMODE === 'require' ? { rejectUnauthorized: false } : undefined,
+      ssl,
     });
   }
 
