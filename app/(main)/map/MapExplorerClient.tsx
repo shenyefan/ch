@@ -236,7 +236,7 @@ export default function MapExplorerClient({ language }: { language: Language }) 
 
           <div className="relative overflow-hidden rounded-[32px] border border-[#d4af37]/20 bg-[#2b140b] shadow-[0_28px_60px_rgba(26,0,0,0.28)]">
             <Map
-              center={mapCenter}
+              center={mapCenter as unknown as BMapGL.Point}
               zoom={mapZoom}
               enableScrollWheelZoom
               style={{ height: '760px', width: '100%' }}
