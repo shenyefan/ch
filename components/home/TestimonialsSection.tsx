@@ -1,3 +1,4 @@
+import { sql } from '@/lib/db';
 import { copy, type Language, t } from '@/lib/i18n';
 
 interface Review {
@@ -11,13 +12,21 @@ interface Review {
 
 async function getReviews(): Promise<Review[]> {
   try {
-    const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
-    const res = await fetch(`${base}/api/reviews?limit=3`, {
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) return [];
-    const json = await res.json();
-    return (json.data ?? []) as Review[];
+    const rows = await sql<Review>`
+      SELECT
+        r.id,
+        r.author_name,
+        r.content,
+        r.rating,
+        c.slug AS city_slug,
+        c.name AS city_name
+      FROM reviews r
+      LEFT JOIN cities c ON c.id = r.city_id
+      WHERE r.status = 'approved'
+      ORDER BY r.created_at DESC
+      LIMIT 3
+    `;
+    return rows;
   } catch {
     return [];
   }

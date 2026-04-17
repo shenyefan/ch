@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { copy, type Language, t } from '@/lib/i18n';
 import { getPreferredLanguage } from '@/lib/i18n-server';
+import { sql } from '@/lib/db';
 
 import CityDetailClient, {
   type CityFeatureCard,
@@ -21,12 +22,6 @@ interface CityDetail {
   landmarks: CityLandmark[];
 }
 
-interface CityApiResponse {
-  data: CityDetail;
-}
-
-const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
-
 function normalizeGallery(value: unknown): string[] {
   if (!Array.isArray(value)) {
     return [];
@@ -35,52 +30,78 @@ function normalizeGallery(value: unknown): string[] {
   return value.filter((item): item is string => typeof item === 'string' && item.length > 0);
 }
 
-async function fetchJson<T>(path: string): Promise<T | null> {
+async function getCity(slug: string, language: Language): Promise<CityDetail | null> {
   try {
-    const res = await fetch(`${BASE}${path}`, { next: { revalidate: 3600 } });
-    if (!res.ok) {
-      return null;
-    }
+    const [city] = await sql`
+      SELECT
+        c.id, c.slug, c.featured_image, c.hero_video_url, c.gallery_images,
+        ct.name, ct.subtitle, ct.short_bio, ct.description
+      FROM cities c
+      JOIN city_translations ct ON ct.city_id = c.id AND ct.language = ${language}
+      WHERE c.slug = ${slug} AND c.is_active = TRUE
+    `;
+    if (!city) return null;
 
-    return (await res.json()) as T;
+    const landmarks = await sql<CityLandmark>`
+      SELECT
+        lm.id, lm.slug, lm.latitude, lm.longitude, lm.category,
+        lm.featured_image, lm.is_featured, lm.sort_order,
+        lt.name, lt.short_description, lt.description,
+        lt.historical_background, lt.visiting_tips
+      FROM landmarks lm
+      JOIN landmark_translations lt ON lt.landmark_id = lm.id AND lt.language = ${language}
+      WHERE lm.city_id = ${city.id} AND lm.is_active = TRUE
+      ORDER BY lm.sort_order ASC, lm.id ASC
+    `;
+
+    return {
+      ...(city as CityDetail),
+      gallery_images: normalizeGallery(city.gallery_images),
+      landmarks,
+    };
   } catch {
     return null;
   }
 }
 
-async function getCity(slug: string, language: Language): Promise<CityDetail | null> {
-  const json = await fetchJson<CityApiResponse>(`/api/cities/${slug}?lang=${language}`);
-  if (!json?.data) {
-    return null;
-  }
-
-  return {
-    ...json.data,
-    gallery_images: normalizeGallery(json.data.gallery_images),
-    landmarks: json.data.landmarks ?? [],
-  };
-}
-
 async function getFeatures(slug: string, language: Language): Promise<CityFeatureCard[]> {
-  const json = await fetchJson<CityFeatureCard[] | { data: CityFeatureCard[] }>(`/api/cities/${slug}/features?lang=${language}`);
-  if (!json) {
+  try {
+    const rows = await sql<CityFeatureCard>`
+      SELECT
+        f.id, f.slug, f.card_image, f.interactive_url, f.statues_url,
+        f.modal_slug, f.sort_order, t.title, t.description
+      FROM city_features f
+      JOIN city_feature_translations t ON t.feature_id = f.id AND t.language = ${language}
+      JOIN cities c ON c.id = f.city_id
+      WHERE c.slug = ${slug} AND f.is_active = TRUE
+      ORDER BY f.sort_order
+    `;
+    return rows;
+  } catch {
     return [];
   }
-
-  return Array.isArray(json) ? json : json.data ?? [];
 }
 
 async function getChapters(modalSlug: string, language: Language): Promise<CityFeatureChapter[]> {
-  const json = await fetchJson<CityFeatureChapter[] | { data: CityFeatureChapter[] }>(`/api/features/${modalSlug}/chapters?lang=${language}`);
-  const rows = Array.isArray(json) ? json : json?.data ?? [];
-
-  return rows.map((chapter) => ({
-    ...chapter,
-    images: normalizeGallery(chapter.images),
-    paragraphs: Array.isArray(chapter.paragraphs)
-      ? chapter.paragraphs.filter((paragraph): paragraph is string => typeof paragraph === 'string' && paragraph.length > 0)
-      : [],
-  }));
+  try {
+    const rows = await sql`
+      SELECT
+        ch.id, ch.slug, ch.images, ch.sort_order, t.title, t.paragraphs
+      FROM feature_chapters ch
+      JOIN feature_chapter_translations t ON t.chapter_id = ch.id AND t.language = ${language}
+      WHERE ch.modal_slug = ${modalSlug}
+      ORDER BY ch.sort_order
+    `;
+    return rows.map((chapter) => ({
+      ...(chapter as CityFeatureChapter),
+      images: normalizeGallery(chapter.images),
+      paragraphs: Array.isArray(chapter.paragraphs)
+        ? chapter.paragraphs.filter((paragraph): paragraph is string => typeof paragraph === 'string' && paragraph.length > 0)
+        : [],
+    }));
+  } catch {
+    return [];
+  }
 }
 
 function buildFallbackFeatures(city: CityDetail, language: Language): CityFeatureCard[] {

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { sql } from '@/lib/db';
 import { copy, type Language, t } from '@/lib/i18n';
 
 interface City {
@@ -15,13 +16,32 @@ interface City {
 
 async function getCities(language: Language): Promise<City[]> {
   try {
-    const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
-    const res = await fetch(`${base}/api/cities?lang=${language}&limit=3`, {
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) return [];
-    const json = await res.json();
-    return (json.data ?? []) as City[];
+    const rows = await sql<City>`
+      SELECT
+        c.id,
+        c.slug,
+        c.featured_image AS image_url,
+        COALESCE((
+          SELECT ROUND(AVG(r.rating)::numeric, 1)
+          FROM reviews r
+          WHERE r.city_id = c.id AND r.status = 'approved' AND r.rating IS NOT NULL
+        ), 0)::float8 AS avg_rating,
+        (
+          SELECT COUNT(*)::int
+          FROM reviews r
+          WHERE r.city_id = c.id AND r.status = 'approved'
+        ) AS review_count,
+        ct.name,
+        ct.subtitle,
+        ct.short_bio,
+        ct.description
+      FROM cities c
+      JOIN city_translations ct ON ct.city_id = c.id AND ct.language = ${language}
+      WHERE c.is_active = TRUE
+      ORDER BY c.sort_order ASC, c.id ASC
+      LIMIT 3
+    `;
+    return rows;
   } catch {
     return [];
   }
