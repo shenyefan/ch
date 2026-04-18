@@ -1,4 +1,5 @@
 import { copy, type Language, t } from '@/lib/i18n';
+import GameModal from '@/components/GameModal';
 
 export default function HeroSection({ language }: { language: Language }) {
   const heroCopy = copy.home;
@@ -27,13 +28,7 @@ export default function HeroSection({ language }: { language: Language }) {
 
           {/* CTAs */}
           <div className="flex flex-wrap gap-4 mb-10">
-            <a
-              href={`/game/index.html?lang=${language}`}
-              className="flex items-center gap-2 bg-gradient-to-r from-[#BB1E1E] to-[#8B0000] text-[#FFD700] rounded-full px-8 py-4 font-semibold text-[15px] no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(187,30,30,0.4)]"
-            >
-              <i className="fas fa-gamepad" />
-              {t(heroCopy.playGame, language)}
-            </a>
+            <GameModal language={language} />
             <a
               href="#explore"
               className="flex items-center gap-2 border-2 border-white/20 text-white/80 rounded-full px-8 py-4 font-semibold text-[15px] no-underline transition-all duration-300 hover:border-white/40 hover:text-white hover:-translate-y-0.5"

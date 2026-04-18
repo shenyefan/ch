@@ -212,6 +212,23 @@ export const copy = {
     activeLandmark: { en: 'Selected landmark', zh: '当前地标', ar: 'المعلم المحدد' },
     cityOverview: { en: 'City overview', zh: '城市概览', ar: 'نظرة عامة على المدينة' },
   },
+  game: {
+    title: { en: 'The Lost Guardian', zh: '失落的守卫', ar: 'الحارس الضائع' },
+    desc: {
+      en: "Insolent servant! A terrible storm has scattered the sacred guardians from the Forbidden City's rooftops. The palace's yin-yang balance is broken — you must recover the five lost relics. Do not fail!",
+      zh: '大胆奴才！一场可怕的风暴将故宫屋顶的神圣守卫吹散。宫殿的阴阳平衡已失，你必须寻回散落的五件遗迹。不得有误！',
+      ar: 'أيها الخادم الوقح! عاصفة مروعة بعثرت الحراس المقدسين من أسطح المدينة المحرمة. توازن الين واليانغ في القصر قد اختل — عليك استرداد الخمس آثار الضائعة. لا تخذلنا!',
+    },
+    controlsLabel: { en: 'Controls: ', zh: '操作：', ar: 'التحكم: ' },
+    controls: {
+      en: 'WASD to move, mouse to look around. Approach relics to collect them.',
+      zh: 'WASD 移动，鼠标环视。靠近遗迹即可收集。',
+      ar: 'WASD للتحرك، الفأرة للنظر حولك. اقترب من الآثار لجمعها.',
+    },
+    enter: { en: 'ENTER GAME', zh: '进入游戏', ar: 'ادخل اللعبة' },
+    exit: { en: 'EXIT', zh: '退出', ar: 'خروج' },
+    locationTag: { en: 'Forbidden City', zh: '故宫 · Forbidden City', ar: 'المدينة المحرمة' },
+  },
 } as const;
 
 export function t<T extends Record<Language, string>>(entry: T, language: Language): string {
