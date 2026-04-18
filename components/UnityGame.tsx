@@ -2,16 +2,11 @@
 
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import type { Language } from '@/lib/i18n';
+import { copy, t } from '@/lib/i18n';
 
 export interface UnityGameHandle {
   setFullscreen: () => void;
 }
-
-const loadingLabel: Record<Language, string> = {
-  en: 'Loading game assets...',
-  zh: '游戏资源加载中...',
-  ar: 'جار تحميل ملفات اللعبة...',
-};
 
 const LOADER_SRC = '/game/build.loader.js';
 
@@ -104,7 +99,7 @@ const UnityGame = forwardRef<UnityGameHandle, { language: Language }>(
         {!loaded && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 pointer-events-none">
             <div className="text-white/60 text-sm tracking-widest font-[Cinzel,serif]">
-              {loadingLabel[language]}
+              {t(copy.game.loading, language)}
             </div>
             <div className="w-[220px] h-[5px] bg-white/10 rounded-full overflow-hidden">
               <div

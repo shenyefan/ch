@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { type Language } from '@/lib/i18n';
+import { type Language, copy, t } from '@/lib/i18n';
 
 type Message = {
   id: number;
@@ -67,11 +67,7 @@ export default function AiChat({ language }: { language: Language }) {
     }
   };
 
-  const placeholder = language === 'zh'
-    ? '询问中国文化遗产…'
-    : language === 'ar'
-      ? 'اسأل عن التراث الصيني…'
-      : 'Ask about Chinese heritage…';
+  const placeholder = t(copy.chat.placeholder, language);
 
   return (
     <>
@@ -104,8 +100,8 @@ export default function AiChat({ language }: { language: Language }) {
               </svg>
             </div>
             <div>
-              <p className="font-[Cinzel,serif] text-sm font-bold text-[#FFD700]">AI Heritage Assistant</p>
-              <p className="text-[11px] text-white/60">Powered by DeepSeek</p>
+              <p className="font-[Cinzel,serif] text-sm font-bold text-[#FFD700]">{t(copy.chat.title, language)}</p>
+              <p className="text-[11px] text-white/60">{t(copy.chat.subtitle, language)}</p>
             </div>
           </div>
 
@@ -113,7 +109,7 @@ export default function AiChat({ language }: { language: Language }) {
           <div className="flex max-h-[360px] min-h-[180px] flex-col gap-3 overflow-y-auto bg-[#fdf8f2] px-4 py-4">
             {messages.length === 0 && (
               <div className="rounded-[16px] bg-white px-4 py-3 text-sm leading-6 text-[#5a3a2a] shadow-sm">
-                Hello! I&apos;m your AI Heritage Assistant. Ask me anything about Chinese architecture and cultural history!
+                {t(copy.chat.welcome, language)}
               </div>
             )}
             {messages.map((msg) => (
